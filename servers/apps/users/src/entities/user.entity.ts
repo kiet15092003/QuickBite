@@ -2,7 +2,7 @@ import { Directive, Field, ObjectType } from '@nestjs/graphql';
 import { BaseEntity } from 'public/base/entity.base';
 
 @ObjectType()
-@Directive('@key(field: "id")')
+@Directive('@key(fields: "id")')
 export class Avatars extends BaseEntity {
   @Field()
   public_id: string;

@@ -1,9 +1,18 @@
-import { ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { User } from '../entities/user.entity';
-import { BaseResponse } from 'public/base/response.base';
+import { ErrorType } from 'public/types/error.types';
 
 @ObjectType()
-export class RegisterResponse extends BaseResponse<User> {}
+export class RegisterResponse {
+  @Field()
+  success: boolean;
 
-@ObjectType()
-export class LoginResponse extends BaseResponse<User> {}
+  @Field(() => User, { nullable: true })
+  data?: User;
+
+  @Field(() => [ErrorType], { nullable: true })
+  error?: ErrorType[];
+}
+
+// @ObjectType()
+// export class LoginResponse extends BaseResponse<User> {}

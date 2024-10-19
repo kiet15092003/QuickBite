@@ -2,12 +2,12 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { ErrorType } from 'public/types/error.types';
 
 @ObjectType()
-export class BaseResponse<T> {
+export class BaseResponse {
   @Field()
   success: boolean;
 
   @Field(() => Object, { nullable: true })
-  data?: T;
+  data?: any;
 
   @Field(() => [ErrorType], { nullable: true })
   error?: ErrorType[];

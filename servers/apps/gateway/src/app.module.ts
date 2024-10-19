@@ -11,7 +11,12 @@ import { ApolloGatewayDriver, ApolloGatewayDriverConfig } from '@nestjs/apollo';
       driver: ApolloGatewayDriver,
       gateway: {
         supergraphSdl: new IntrospectAndCompose({
-          subgraphs: [],
+          subgraphs: [
+            {
+              name: 'users',
+              url: 'https://localhost:4001/graphql',
+            },
+          ],
         }),
       },
     }),

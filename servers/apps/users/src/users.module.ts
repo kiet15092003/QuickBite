@@ -7,9 +7,14 @@ import {
   ApolloFederationDriverConfig,
 } from '@nestjs/apollo';
 import { JwtService } from '@nestjs/jwt';
-
+import { PrismaService } from '../../../prisma/services/prisma.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { UserResolver } from './resolvers/users.resolvers';
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     GraphQLModule.forRoot<ApolloFederationDriverConfig>({
       driver: ApolloFederationDriver,
       autoSchemaFile: {
@@ -18,6 +23,12 @@ import { JwtService } from '@nestjs/jwt';
     }),
   ],
   controllers: [UsersController],
-  providers: [UsersService, JwtService],
+  providers: [
+    UsersService,
+    ConfigService,
+    JwtService,
+    PrismaService,
+    UserResolver,
+  ],
 })
 export class UsersModule {}
