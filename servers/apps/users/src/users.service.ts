@@ -48,15 +48,6 @@ export class UsersService {
     return { activationToken, respone };
   }
 
-  async login(loginDto: LoginDto) {
-    const { email, password } = loginDto;
-    const user = {
-      email,
-      password,
-    };
-    return user;
-  }
-
   async createdActivationToken(user: UserData) {
     const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
     const token = this.jwtService.sign(
@@ -99,6 +90,15 @@ export class UsersService {
       },
     });
     return { user, response };
+  }
+
+  async login(loginDto: LoginDto) {
+    const { email, password } = loginDto;
+    const user = {
+      email,
+      password,
+    };
+    return user;
   }
 
   async getUsers() {
