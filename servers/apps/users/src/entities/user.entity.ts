@@ -28,4 +28,7 @@ export class User extends BaseEntity {
 
   @Field()
   role: string;
+
+  @Field()
+  phoneNumber: string;
 }

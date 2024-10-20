@@ -17,6 +17,11 @@ export class RegisterDto {
   @IsNotEmpty({ message: 'Password is required' })
   @MinLength(8, { message: 'Password must be at least 8 characters' })
   password: string;
+
+  @Field()
+  @IsNotEmpty({ message: 'Phone number is required' })
+  @MinLength(11, { message: 'Phone number must be at least 11 characters' })
+  phoneNumber: string;
 }
 
 export class LoginDto {
