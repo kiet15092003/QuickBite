@@ -23,5 +23,17 @@ export class ActivationResponse {
   error?: ErrorType;
 }
 
-// @ObjectType()
-// export class LoginResponse extends BaseResponse<User> {}
+@ObjectType()
+export class LoginResponse {
+  @Field(() => String, { nullable: true })
+  accessToken?: string;
+
+  @Field(() => String, { nullable: true })
+  refreshToken?: string;
+
+  @Field(() => User, { nullable: true })
+  user?: User;
+
+  @Field(() => ErrorType, { nullable: true })
+  error?: ErrorType;
+}

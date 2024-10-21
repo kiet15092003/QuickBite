@@ -5,6 +5,7 @@ import { ActivationDto, LoginDto, RegisterDto } from './dto/user.dto';
 import { PrismaService } from '../../../prisma/services/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { EmailService } from './email/email.service';
+import { TokenSenderService } from './utils/sendToken';
 
 @Injectable()
 export class UsersService {
@@ -13,6 +14,7 @@ export class UsersService {
     private readonly configService: ConfigService,
     private readonly prismaService: PrismaService,
     private readonly emailService: EmailService,
+    private readonly sendToken: TokenSenderService,
   ) {}
 
   async register(registerDto: RegisterDto, respone: Response) {
@@ -92,13 +94,28 @@ export class UsersService {
     return { user, response };
   }
 
-  async login(loginDto: LoginDto) {
+  async login(loginDto: LoginDto, response: Response) {
     const { email, password } = loginDto;
-    const user = {
-      email,
-      password,
-    };
-    return user;
+    const user = await this.prismaService.user.findFirst({
+      where: {
+        email: email,
+      },
+    });
+    if (!user) {
+      throw new BadRequestException('Email is not exist');
+    }
+    if (!(await this.comparePassword(password, user.password))) {
+      throw new BadRequestException('Incorrect password');
+    }
+    const { accessToken, refreshToken } = this.sendToken.sendToken(user);
+    return { accessToken, refreshToken, user, response };
+  }
+
+  async comparePassword(
+    password: string,
+    hashedPassword: string,
+  ): Promise<boolean> {
+    return await bcrypt.compare(password, hashedPassword);
   }
 
   async getUsers() {

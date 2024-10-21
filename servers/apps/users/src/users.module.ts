@@ -12,6 +12,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserResolver } from './resolvers/users.resolvers';
 import { EmailModule } from './email/email.module';
 import { EmailService } from './email/email.service';
+import { TokenSenderService } from './utils/sendToken';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -33,6 +34,7 @@ import { EmailService } from './email/email.service';
     PrismaService,
     EmailService,
     UserResolver,
+    TokenSenderService,
   ],
 })
 export class UsersModule {}
