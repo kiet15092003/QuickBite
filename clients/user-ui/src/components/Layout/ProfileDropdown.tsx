@@ -1,13 +1,13 @@
 'use client';
+import AuthScreen from '@/src/screens/AuthScreen';
 import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import React, { useState } from 'react';
-import { CgProfile } from "react-icons/cg";
 
 const ProfileDropdown = () => {
-    const [signedIn, setSignedIn] = useState(false); // Set initial signedIn state
-
+    const [signedIn, setSignedIn] = useState(false);
+    const [open, setOpen] = useState(false);
     return (
-        <div className="flex items-center gap-4 relative"> {/* Add relative positioning here */}
+        <div className="flex items-center gap-4 relative">
             {signedIn ? (
                 <Dropdown placement="bottom-end">
                     <DropdownTrigger>
@@ -20,13 +20,13 @@ const ProfileDropdown = () => {
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Profile Actions" variant="flat">
                         <DropdownItem key="profile" className="h-14 gap-2">
-                            <p className="font-semibold">Signed in as</p>
-                            <p className="font-semibold">zoey@example.com</p>
+                            <p className="font-semibold text-white">Signed in as</p>
+                            <p className="font-semibold text-white">zoey@example.com</p>
                         </DropdownItem>
-                        <DropdownItem key="my_profile">My Profile</DropdownItem>
-                        <DropdownItem key="my_orders">My Orders</DropdownItem>
-                        <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-                        <DropdownItem key="logout" color="danger">Log Out</DropdownItem>
+                        <DropdownItem key="my_profile" className='text-white'>My Profile</DropdownItem>
+                        <DropdownItem key="my_orders" className='text-white'>My Orders</DropdownItem>
+                        <DropdownItem key="help_and_feedback" className='text-white'>Help & Feedback</DropdownItem>
+                        <DropdownItem key="logout" color="danger" className='text-white'>Log Out</DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
             ) : (
@@ -35,15 +35,23 @@ const ProfileDropdown = () => {
                     <Avatar
                             isBordered
                             as="button"
-                            className="transition-transform"                          
+                            className="transition-transform"     
+                            size='sm'                     
                         />
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Anonymous Profile Actions" variant="flat">
-                        <DropdownItem key="signin">Sign in</DropdownItem>
-                        <DropdownItem key="signup" color='primary'>Sign up</DropdownItem>
+                        <DropdownItem key="signin" className='text-white'
+                            onClick={() => setOpen(!open)}
+                        >
+                            Sign in
+                        </DropdownItem>
+                        <DropdownItem key="signup" color='primary' className='text-white'>Sign up</DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
             )}
+            {
+                open ? (<AuthScreen/>) : (<div></div>)
+            }
         </div>
     );
 }

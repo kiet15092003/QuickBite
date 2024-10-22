@@ -7,9 +7,9 @@ import ProfileDropdown from './ProfileDropdown';
 const Header = () => {
   const [activeItem, setActiveItem] = useState(0);
   return (
-    <header className='w-full bg-gray-900'>
+    <header className='w-full bg-black'>
       <div className='w-[90%] m-auto h-[80px] flex items-center justify-between'>
-        <h1 className={`${styles.logo}`}> 
+        <h1 className={`text-white ${styles.logo}`}> 
           QuickBite
         </h1>
         <NavItems activeItem={activeItem} setActiveItem={setActiveItem}/>  
