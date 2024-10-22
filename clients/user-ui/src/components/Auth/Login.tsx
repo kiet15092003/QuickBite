@@ -43,6 +43,7 @@ const Login = ( {setActiveSite} : {setActiveSite : (e: string) => void} ) => {
                     }
                     radius='sm'
                     variant='underlined'
+                    style={{ color: 'grey' }}
                 />
                 {
                     errors.email && (
@@ -73,6 +74,7 @@ const Login = ( {setActiveSite} : {setActiveSite : (e: string) => void} ) => {
                         </button>
                     }
                     type={ isVisible ? 'text' : 'password'}
+                    style={{ color: 'grey' }}
                 />
                 {
                     errors.password && (

@@ -1,8 +1,11 @@
+import { REGISTER_USER } from '@/src/graphql/actions/register.action';
 import styles from '@/src/utils/style';
+import { useMutation } from '@apollo/client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input } from '@nextui-org/react';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { FaEye, FaEyeSlash, FaLock, FaPhone, FaUser } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { MdEmail } from 'react-icons/md';
@@ -12,7 +15,7 @@ const formSchema = z.object({
     email: z.string().email("Invalid email"),
     password: z.string().min(8,"Password must be at least 8 characters long"),
     name: z.string().min(1,"Name must be required"),
-    phoneNumber : z.number().min(10,"Password must be 10 characters long").max(10, "Password must be 10 characters long")
+    phoneNumber : z.string().min(10,"Phone number must be 10 characters long").max(10, "Password must be 10 characters long")
 })
 
 type registerSchema = z.infer<typeof formSchema>;
@@ -23,17 +26,30 @@ const Register = ({setActiveSite}: {setActiveSite : (e:string) => void}) => {
         resolver: zodResolver(formSchema)
     })
 
-    const onSubmit = (data: registerSchema) => {
-        reset()
-    }
+    const [registerUserMutation, {loading}] = useMutation(REGISTER_USER)
 
     const [isVisible, setIsVisible] = useState<boolean>(false)
 
     const toggleVisibility = () => setIsVisible(!isVisible)
 
-  return (
-    <div style={{width: "300px"}}>
-        <h1 className={`${styles.title} text-black font-bold mb-3`}>Signup with QuickBite</h1>
+    const onSubmit = async (data: registerSchema) => {
+        try {
+            const response = await registerUserMutation({
+                variables: data,
+            })
+            toast.success("Please check your email to activate your account")
+            localStorage.setItem("activationToken", response.data.register.activationToken)
+            reset();
+            setActiveSite('verification');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+            toast.error(error.message)
+        }
+    }
+    
+    return (
+        <div style={{width: "300px"}}>
+            <h1 className={`${styles.title} text-black font-bold mb-3`}>Signup with QuickBite</h1>
             <form onSubmit={handleSubmit(onSubmit)} >
                 <Input 
                     {...register("email")}
@@ -45,6 +61,7 @@ const Register = ({setActiveSite}: {setActiveSite : (e:string) => void}) => {
                     }
                     radius='sm'
                     variant='underlined'
+                    style={{ color: 'grey' }}
                 />
                 {
                     errors.email && (
@@ -75,6 +92,7 @@ const Register = ({setActiveSite}: {setActiveSite : (e:string) => void}) => {
                         </button>
                     }
                     type={ isVisible ? 'text' : 'password'}
+                    style={{ color: 'grey' }}
                 />
                 {
                     errors.password && (
@@ -92,6 +110,7 @@ const Register = ({setActiveSite}: {setActiveSite : (e:string) => void}) => {
                     radius='sm'
                     variant='underlined'
                     className='mt-5'
+                    style={{ color: 'grey' }}
                 />
                 {
                     errors.name && (
@@ -110,6 +129,7 @@ const Register = ({setActiveSite}: {setActiveSite : (e:string) => void}) => {
                     variant='underlined'
                     className='mt-5'
                     type='text'
+                    style={{ color: 'grey' }}
                 />
                 {
                     errors.phoneNumber && (
@@ -118,14 +138,17 @@ const Register = ({setActiveSite}: {setActiveSite : (e:string) => void}) => {
                         </span>
                     )
                 }
-                <Button type='submit' color='primary' className='w-full rounded-md mt-6'>
+                <Button 
+                    type='submit' 
+                    color='primary' 
+                    className='w-full rounded-md mt-6'
+                    isDisabled={isSubmitting || loading}
+                >
                     Signup
                 </Button>
                 <div className='flex items-center mt-3'>
                     <div className="flex-grow h-px bg-gray-400"></div>
-
                     <span className='mx-4 text-gray-400'>Or signup with</span>
-
                     <div className="flex-grow h-px bg-gray-400"></div>
                 </div>
                 <Button className='w-full rounded-md mt-3 bg-white'>
@@ -142,7 +165,7 @@ const Register = ({setActiveSite}: {setActiveSite : (e:string) => void}) => {
                 </div>
             </form>
         </div>
-  )
+    )
 }
 
 export default Register

@@ -20,7 +20,7 @@ export class RegisterDto {
 
   @Field()
   @IsNotEmpty({ message: 'Phone number is required' })
-  @MinLength(11, { message: 'Phone number must be at least 11 characters' })
+  @MinLength(10, { message: 'Phone number must be at least 10 characters' })
   phoneNumber: string;
 }
 
