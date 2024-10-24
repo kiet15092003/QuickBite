@@ -7,6 +7,9 @@ import { Button, Input } from '@nextui-org/react'
 import { MdEmail } from 'react-icons/md'
 import { FaEye, FaEyeSlash, FaLock } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
+import { useLoginService } from '@/src/core/services/Auth/login.service'
+import toast from 'react-hot-toast'
+import Cookies from 'js-cookie'
 
 const formSchema = z.object({
     email: z.string().email("Invalid email"),
@@ -21,7 +24,20 @@ const Login = ( {setActiveSite} : {setActiveSite : (e: string) => void} ) => {
         resolver: zodResolver(formSchema)
     })
 
-    const onSubmit = (data: loginSchema) => {
+    const { loginUser, loading } = useLoginService()
+
+    const onSubmit = async (data: loginSchema) => {
+        try {
+            const response = await loginUser(data)
+            console.log(response)
+            if (response.data.user){
+                Cookies.set("refreshToken", response.data.refreshToken);
+                Cookies.set("accessToken", response.data.accessToken);
+                toast.success("Login successfully"); 
+            }
+        } catch (error: any) {
+            toast.error(error.message)
+        }
         reset()
     }
 

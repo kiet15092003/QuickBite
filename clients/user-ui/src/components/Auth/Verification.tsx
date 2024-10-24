@@ -1,6 +1,8 @@
+import { useActiveUserService } from "@/src/core/services/Auth/activeUser.service";
 import styles from "@/src/utils/style";
 import { Button } from "@nextui-org/react";
 import { FC, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
 
 type Props = {
@@ -16,14 +18,12 @@ type VerifyNumber = {
 
 const Verification: FC<Props> = ({ setActiveState }) => {
   const [invalidError, setInvalidError] = useState(false);
-
   const inputRefs = [
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
   ];
-
   const [verifyNumber, setVerifyNumber] = useState<VerifyNumber>({
     0: "",
     1: "",
@@ -31,20 +31,43 @@ const Verification: FC<Props> = ({ setActiveState }) => {
     3: "",
   });
 
+  const {activeUser, loading} = useActiveUserService()
+  
   const verificationHandler = async () => {
+    try {
+      const activationCode = Object.values(verifyNumber).join("")
+      const activationToken = localStorage.getItem("activationToken")
+      // const response = await avtiveUserMutation(
+      //   {
+      //     variables: {
+      //       activationCode: activationCode,
+      //       activationToken: activationToken
+      //     }
+      //   }
+      // )
+      const response = await activeUser({
+        activationCode: activationCode,
+        activationToken: activationToken!
+      })
+      console.log(response)
+      toast.success("Active user successfully, login now!!!")
+      setActiveState('login')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast.error(error.message)
+    }
   };
 
   const handleInputChange = (index: number, value: string) => {
     setInvalidError(false);
     const newVerifyNumber = { ...verifyNumber, [index]: value };
     setVerifyNumber(newVerifyNumber);
-    console.log(value)
-
     if (value === "" && index > 0) {
       inputRefs[index - 1].current?.focus();
     } else if (value.length === 1 && index < 3) {
       inputRefs[index + 1].current?.focus();
     }
+    console.log(value)
   };
 
   return (
@@ -96,7 +119,8 @@ const Verification: FC<Props> = ({ setActiveState }) => {
           type='submit' 
           color='primary' 
           className='w-full rounded-md mt-6'
-          onClick={verificationHandler}
+          onClick= {verificationHandler}
+          isDisabled= {loading}
       >
           Verify OTP
       </Button>

@@ -1,6 +1,5 @@
-import { REGISTER_USER } from '@/src/graphql/actions/register.action';
+import { useRegisterService } from '@/src/core/services/Auth/register.service';
 import styles from '@/src/utils/style';
-import { useMutation } from '@apollo/client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input } from '@nextui-org/react';
 import React, { useState } from 'react'
@@ -26,7 +25,7 @@ const Register = ({setActiveSite}: {setActiveSite : (e:string) => void}) => {
         resolver: zodResolver(formSchema)
     })
 
-    const [registerUserMutation, {loading}] = useMutation(REGISTER_USER)
+    const {registerUser, loading} = useRegisterService()
 
     const [isVisible, setIsVisible] = useState<boolean>(false)
 
@@ -34,9 +33,7 @@ const Register = ({setActiveSite}: {setActiveSite : (e:string) => void}) => {
 
     const onSubmit = async (data: registerSchema) => {
         try {
-            const response = await registerUserMutation({
-                variables: data,
-            })
+            const response = await registerUser(data)
             toast.success("Please check your email to activate your account")
             localStorage.setItem("activationToken", response.data.register.activationToken)
             reset();

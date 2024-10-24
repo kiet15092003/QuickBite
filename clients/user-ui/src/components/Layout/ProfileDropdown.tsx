@@ -45,7 +45,6 @@ const ProfileDropdown = () => {
                         >
                             Sign in
                         </DropdownItem>
-                        <DropdownItem key="signup" color='primary' className='text-white'>Sign up</DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
             )}

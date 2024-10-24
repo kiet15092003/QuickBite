@@ -5,7 +5,7 @@ import Verification from '../components/Auth/Verification'
 
 const AuthScreen = () => {
 
-  const [activeSite, setActiveSite] = useState<string>('verification')
+  const [activeSite, setActiveSite] = useState<string>('login')
 
   return (
     <div className='w-full fixed top-0 left-0 h-screen z-50 flex items-center justify-center bg-white'>

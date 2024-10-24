@@ -1,7 +1,7 @@
 // app/providers.tsx
 'use client'
 
-import { gqlClient } from '@/src/graphql/gql.setup'
+import { gqlClient } from '@/src/core/graphql/gql.setup'
 import { ApolloProvider } from '@apollo/client'
 import {NextUIProvider} from '@nextui-org/react'
 import {ThemeProvider as NextThemesProvider} from 'next-themes'
