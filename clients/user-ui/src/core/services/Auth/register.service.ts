@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client"
 import { REGISTER_USER } from "../../graphql/actions/register.action"
-import { RegisterModel } from "../../models/register.model"
+import { RegisterModel } from "../../models/Auth/register.model"
 
 export const useRegisterService = () => {
     const [registerMutation, {loading}] = useMutation(REGISTER_USER)

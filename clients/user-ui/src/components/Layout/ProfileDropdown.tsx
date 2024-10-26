@@ -1,11 +1,20 @@
 'use client';
+import useUser from '@/src/hooks/useUser';
 import AuthScreen from '@/src/screens/AuthScreen';
 import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const ProfileDropdown = () => {
     const [signedIn, setSignedIn] = useState(false);
     const [open, setOpen] = useState(false);
+    const {user, loading} = useUser();
+
+    useEffect(()=>{
+        if (!loading){
+            setSignedIn(!!user)
+        }
+    }, [loading, user])
+
     return (
         <div className="flex items-center gap-4 relative">
             {signedIn ? (

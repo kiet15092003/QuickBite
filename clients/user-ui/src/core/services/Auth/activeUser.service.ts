@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { ACTIVE_USER } from "../../graphql/actions/activeUser.action";
-import { ActiveUserModel } from "../../models/activeUser.model";
+import { ActiveUserModel } from "../../models/Auth/activeUser.model";
 
 export const useActiveUserService = () => {
     const [avtiveUserMutation, {loading}] = useMutation(ACTIVE_USER);

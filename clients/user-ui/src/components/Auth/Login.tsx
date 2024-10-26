@@ -20,7 +20,7 @@ type loginSchema = z.infer<typeof formSchema>;
 
 const Login = ( {setActiveSite} : {setActiveSite : (e: string) => void} ) => {
 
-    const {register, handleSubmit, formState: {errors, isSubmitting}, reset} = useForm<loginSchema>({
+    const {register, handleSubmit, formState: {errors}, reset} = useForm<loginSchema>({
         resolver: zodResolver(formSchema)
     })
 
@@ -30,15 +30,17 @@ const Login = ( {setActiveSite} : {setActiveSite : (e: string) => void} ) => {
         try {
             const response = await loginUser(data)
             console.log(response)
-            if (response.data.user){
-                Cookies.set("refreshToken", response.data.refreshToken);
-                Cookies.set("accessToken", response.data.accessToken);
-                toast.success("Login successfully"); 
+            if (response.data.login.user){
+                Cookies.set("refreshToken", response.data.login.refreshToken);
+                Cookies.set("accessToken", response.data.login.accessToken);
+                toast.success("Login successfully");
+                window.location.reload();
+                reset()
             }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             toast.error(error.message)
         }
-        reset()
     }
 
     const [isVisible, setIsVisible] = useState(false);
@@ -102,7 +104,8 @@ const Login = ( {setActiveSite} : {setActiveSite : (e: string) => void} ) => {
                 <div className='flex items-center justify-end mt-3'>
                     <span className='text-primary-500 ml-1'>Forgot your password?</span>
                 </div>
-                <Button type='submit' color='primary' className='w-full rounded-md mt-3'>
+                <Button type='submit' color='primary' className='w-full rounded-md mt-3'
+                    isDisabled = {loading}>
                     Login
                 </Button>
                 <div className='flex items-center mt-3'>

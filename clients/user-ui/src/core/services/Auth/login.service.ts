@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client"
 import { LOGIN_USER } from "../../graphql/actions/login.actions";
-import { LoginUserModel } from "../../models/loginUser.model";
+import { LoginUserModel } from "../../models/Auth/loginUser.model";
 
 export const useLoginService = () => {
     const [loginMutation, {loading}] = useMutation(LOGIN_USER);

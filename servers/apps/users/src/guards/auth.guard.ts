@@ -38,6 +38,10 @@ export class AuthGuard implements CanActivate {
   public async updateAccessToken(req: any): Promise<void> {
     const refreshToken = req.headers.refreshtoken as string;
     const decodedRefreshToken = await this.jwtService.decode(refreshToken);
+    console.log(
+      '🚀 ~ AuthGuard ~ updateAccessToken ~ decodedRefreshToken:',
+      decodedRefreshToken,
+    );
     const expirationTime = decodedRefreshToken.exp;
     if (expirationTime * 1000 < Date.now()) {
       throw new UnauthorizedException('Please login to access this resource!');
