@@ -3,6 +3,8 @@ import useUser from '@/src/hooks/useUser';
 import AuthScreen from '@/src/screens/AuthScreen';
 import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+import toast from 'react-hot-toast';
 
 const ProfileDropdown = () => {
     const [signedIn, setSignedIn] = useState(false);
@@ -10,10 +12,18 @@ const ProfileDropdown = () => {
     const {user, loading} = useUser();
 
     useEffect(()=>{
+        console.log("Loading:", loading, "User:", user);
         if (!loading){
             setSignedIn(!!user)
         }
     }, [loading, user])
+
+    const handleLogout = () => {
+        Cookies.remove("accessToken");
+        Cookies.remove("refreshToken");
+        toast.success("Log out successfully");
+        window.location.reload()
+    }
 
     return (
         <div className="flex items-center gap-4 relative">
@@ -24,18 +34,21 @@ const ProfileDropdown = () => {
                             isBordered
                             as="button"
                             className="transition-transform"
-                            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                            src={user?.avatar?.url}
                         />
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Profile Actions" variant="flat">
                         <DropdownItem key="profile" className="h-14 gap-2">
                             <p className="font-semibold text-white">Signed in as</p>
-                            <p className="font-semibold text-white">zoey@example.com</p>
+                            <p className="font-semibold text-white">{user.email}</p>
                         </DropdownItem>
                         <DropdownItem key="my_profile" className='text-white'>My Profile</DropdownItem>
                         <DropdownItem key="my_orders" className='text-white'>My Orders</DropdownItem>
                         <DropdownItem key="help_and_feedback" className='text-white'>Help & Feedback</DropdownItem>
-                        <DropdownItem key="logout" color="danger" className='text-white'>Log Out</DropdownItem>
+                        <DropdownItem key="logout" color="danger" className='text-white'
+                        onClick={handleLogout}>
+                            Log Out
+                        </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
             ) : (
@@ -53,6 +66,10 @@ const ProfileDropdown = () => {
                             onClick={() => setOpen(!open)}
                         >
                             Sign in
+                        </DropdownItem>
+                        <DropdownItem key="logout" color="danger" className='text-white'
+                        onClick={handleLogout}>
+                            Log Out
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>

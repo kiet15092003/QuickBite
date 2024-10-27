@@ -25,12 +25,8 @@ export class AuthGuard implements CanActivate {
     if (!accessToken || !refreshToken) {
       throw new UnauthorizedException('Please login to access this resource!');
     }
-    if (accessToken) {
-      const decodedAccessToken = this.jwtService.decode(accessToken);
-      const expirationTime = decodedAccessToken.exp;
-      if (expirationTime * 1000 < Date.now()) {
-        await this.updateAccessToken(req);
-      }
+    if (accessToken !== null) {
+      await this.updateAccessToken(req);
     }
     return true;
   }
@@ -38,10 +34,6 @@ export class AuthGuard implements CanActivate {
   public async updateAccessToken(req: any): Promise<void> {
     const refreshToken = req.headers.refreshtoken as string;
     const decodedRefreshToken = await this.jwtService.decode(refreshToken);
-    console.log(
-      '🚀 ~ AuthGuard ~ updateAccessToken ~ decodedRefreshToken:',
-      decodedRefreshToken,
-    );
     const expirationTime = decodedRefreshToken.exp;
     if (expirationTime * 1000 < Date.now()) {
       throw new UnauthorizedException('Please login to access this resource!');

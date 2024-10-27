@@ -13,6 +13,7 @@ import { UserResolver } from './resolvers/users.resolvers';
 import { EmailModule } from './email/email.module';
 import { EmailService } from './email/email.service';
 import { TokenSenderService } from './utils/sendToken';
+import { AuthGuard } from './guards/auth.guard';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -35,6 +36,7 @@ import { TokenSenderService } from './utils/sendToken';
     EmailService,
     UserResolver,
     TokenSenderService,
+    AuthGuard,
   ],
 })
 export class UsersModule {}
