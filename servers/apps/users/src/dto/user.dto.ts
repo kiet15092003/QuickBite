@@ -47,3 +47,11 @@ export class ActivationDto {
   @IsNotEmpty({ message: 'Activation Code is required' })
   activationCode: string;
 }
+
+@InputType()
+export class ForgotPasswordDto {
+  @Field()
+  @IsNotEmpty({ message: 'Email is required' })
+  @IsEmail({}, { message: 'Email is invalid' })
+  email: string;
+}

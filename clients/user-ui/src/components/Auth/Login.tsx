@@ -36,8 +36,7 @@ const Login = ({ setActiveSite }: { setActiveSite: (e: string) => void }) => {
                 Cookies.set("refreshToken", response.data.login.refreshToken);
                 Cookies.set("accessToken", response.data.login.accessToken);
                 toast.success("Login successfully");
-                router.push('/');
-                
+                router.push('/');            
                 reset();
             }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -88,7 +87,9 @@ const Login = ({ setActiveSite }: { setActiveSite: (e: string) => void }) => {
                     </span>
                 )}
                 <div className='flex items-center justify-end mt-3'>
-                    <span className='text-primary-500 ml-1'>Forgot your password?</span>
+                    <span className='text-primary-500 ml-1 cursor-pointer'
+                        onClick={()=>setActiveSite('forgotPassword')}
+                    >Forgot your password?</span>
                 </div>
                 <Button 
                     type='submit' 

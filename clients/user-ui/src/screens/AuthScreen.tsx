@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Login from '../components/Auth/Login'
 import Register from '../components/Auth/Register'
 import Verification from '../components/Auth/Verification'
+import ForgotPassword from '../components/Auth/ForgotPassword'
 
 const AuthScreen = () => {
 
@@ -24,7 +25,9 @@ const AuthScreen = () => {
           : activeSite === 'register' ? 
             (<Register setActiveSite={setActiveSite}/>)
           : activeSite === 'verification' ?
-            (<Verification setActiveState={setActiveSite}/>)
+            (<Verification setActiveSite={setActiveSite}/>)
+          : activeSite === 'forgotPassword' ?
+            (<ForgotPassword setActiveSite={setActiveSite}/>)
           : null
         }
       </div>

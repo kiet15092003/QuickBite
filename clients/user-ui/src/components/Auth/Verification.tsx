@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
 
 type Props = {
-  setActiveState: (route: string) => void;
+  setActiveSite: (route: string) => void;
 };
 
 type VerifyNumber = {
@@ -16,7 +16,7 @@ type VerifyNumber = {
   "3": string;
 };
 
-const Verification: FC<Props> = ({ setActiveState }) => {
+const Verification: FC<Props> = ({ setActiveSite }) => {
   const [invalidError, setInvalidError] = useState(false);
   const inputRefs = [
     useRef<HTMLInputElement>(null),
@@ -51,7 +51,7 @@ const Verification: FC<Props> = ({ setActiveState }) => {
       })
       console.log(response)
       toast.success("Active user successfully, login now!!!")
-      setActiveState('login')
+      setActiveSite('login')
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error.message)
@@ -129,7 +129,7 @@ const Verification: FC<Props> = ({ setActiveState }) => {
         Go back to sign in?
         <span
           className="text-[#2190ff] pl-1 cursor-pointer"
-          onClick={() => setActiveState("login")}
+          onClick={() => setActiveSite("login")}
         >
           Sign in
         </span>
