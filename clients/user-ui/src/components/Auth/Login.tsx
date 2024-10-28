@@ -24,11 +24,9 @@ const Login = ({ setActiveSite }: { setActiveSite: (e: string) => void }) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<loginSchema>({
         resolver: zodResolver(formSchema),
     });
-
     const { loginUser, loading } = useLoginService();
     const router = useRouter();
     const [isVisible, setIsVisible] = useState(false);
-
     const onSubmit = async (data: loginSchema) => {
         try {
             const response = await loginUser(data);

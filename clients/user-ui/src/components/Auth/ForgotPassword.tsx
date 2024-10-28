@@ -19,17 +19,22 @@ const ForgotPassword = ({setActiveSite} : {setActiveSite: (e: string) => void}) 
         resolver: zodResolver(formSchema)
     })
 
-    const {loading, forgotPassword} = useForgotPasswordService()
+    const {loading, forgotPassword, data} = useForgotPasswordService()
 
     const onSubmit = async (reqData: forgotPasswordSchema) => {
         try {
-            forgotPassword(reqData.email)
-            toast.success("Please check your mail to reset your password")
+            forgotPassword({email: reqData.email })
+            console.log(data)
+            if (data){
+                toast.success("Please check your mail to reset your password")
+                reset()
+            } else {
+                toast.error("User not found with this email!")
+            }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             toast.error(error.message)
         }        
-        reset()
     }
     return (
         <div style={{ width: "300px" }}>

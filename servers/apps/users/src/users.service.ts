@@ -6,6 +6,7 @@ import {
   ForgotPasswordDto,
   LoginDto,
   RegisterDto,
+  ResetPasswordDto,
 } from './dto/user.dto';
 import { PrismaService } from '../../../prisma/services/prisma.service';
 import * as bcrypt from 'bcrypt';
@@ -179,5 +180,23 @@ export class UsersService {
       },
     );
     return forgotPasswordToken;
+  }
+
+  async resetPassword(resetPasswordDto: ResetPasswordDto) {
+    const { password, activationToken } = resetPasswordDto;
+    const decoded = await this.jwtService.decode(activationToken);
+    if (!decoded) {
+      throw new BadRequestException('Invalid activation token');
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const updatedUser = await this.prismaService.user.update({
+      where: {
+        id: decoded.user.id,
+      },
+      data: {
+        password: hashedPassword,
+      },
+    });
+    return { user: updatedUser };
   }
 }
