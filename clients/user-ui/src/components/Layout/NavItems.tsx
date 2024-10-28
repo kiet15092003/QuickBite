@@ -39,7 +39,7 @@ const NavItems = ({activeItem = 0, setActiveItem}:
                     className={
                         `px-5 text-[18px] font-[500] 
                         ${
-                            activeItem === index ? "text-[#37b668]" : "text-white"
+                            activeItem === index ? "text-primary-500" : "text-white"
                         }`
                     }
                 >

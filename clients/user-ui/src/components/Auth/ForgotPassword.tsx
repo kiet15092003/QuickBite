@@ -24,7 +24,6 @@ const ForgotPassword = ({setActiveSite} : {setActiveSite: (e: string) => void}) 
     const onSubmit = async (reqData: forgotPasswordSchema) => {
         try {
             forgotPassword({email: reqData.email })
-            console.log(data)
             if (data){
                 toast.success("Please check your mail to reset your password")
                 reset()

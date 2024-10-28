@@ -67,7 +67,6 @@ const Verification: FC<Props> = ({ setActiveSite }) => {
     } else if (value.length === 1 && index < 3) {
       inputRefs[index + 1].current?.focus();
     }
-    console.log(value)
   };
 
   return (

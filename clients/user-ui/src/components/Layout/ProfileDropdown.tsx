@@ -12,7 +12,6 @@ const ProfileDropdown = () => {
     const {user, loading} = useUser();
 
     useEffect(()=>{
-        console.log("Loading:", loading, "User:", user);
         if (!loading){
             setSignedIn(!!user)
         }
