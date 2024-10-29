@@ -1,5 +1,6 @@
 {
     "prisma-smart-formatter.typescript.defaultFormatter": "vscode.typescript-language-features",
     "prisma-smart-formatter.typescriptreact.defaultFormatter": "vscode.typescript-language-features",
-    "quokka.automaticTypeScript": true
+    "quokka.automaticTypeScript": true,
+    "nxConsole.nxWorkspacePath": "apps"
 }
