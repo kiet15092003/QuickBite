@@ -16,6 +16,7 @@ datasource db {
 enum Role {
   Admin
   User
+  Restaurant
 }
 
 model Avatars {
@@ -26,6 +27,17 @@ model Avatars {
   userId Int @unique
 }
 
+model Address {
+  id Int @id @default(autoincrement())
+  country String
+  city String
+  district String
+  user User @relation(fields: [userId], references: [id])
+  userId Int 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model User{
   id Int @id @default(autoincrement())
   name String
@@ -33,6 +45,7 @@ model User{
   password String
   phoneNumber String
   avatar Avatars?
+  addreses Address[]
   role Role @default(User)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -23,7 +23,7 @@ import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
           from: 'QuickBite',
         },
         template: {
-          dir: join(__dirname, '../../../../servers/email-templates'),
+          dir: join(__dirname, '../../../apps/api-users/email-templates'),
           adapter: new EjsAdapter(),
           options: {
             strict: false,
