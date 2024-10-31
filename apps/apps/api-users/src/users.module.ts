@@ -7,11 +7,11 @@ import {
   ApolloFederationDriverConfig,
 } from '@nestjs/apollo';
 import { JwtService } from '@nestjs/jwt';
+import { AuthGuard } from './guards/auth.guard';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserResolver } from './resolvers/users.resolvers';
 import { EmailModule } from './email/email.module';
 import { EmailService } from './email/email.service';
-import { AuthGuard } from './guards/auth.guard';
 import { PrismaService } from './utils/services/prisma.service';
 import { TokenSenderService } from './utils/services/sendToken.service';
 @Module({
