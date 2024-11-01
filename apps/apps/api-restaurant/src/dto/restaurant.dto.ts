@@ -9,28 +9,13 @@ export class RegisterDto {
   name: string;
 
   @Field()
-  @IsNotEmpty({ message: 'Restaurant country is required.' })
-  @IsString({ message: 'Restaurant country must need to be one string.' })
-  country: string;
-
-  @Field()
-  @IsNotEmpty({ message: 'Restaurant city is required.' })
-  @IsString({ message: 'Restaurant city must need to be one string.' })
-  city: string;
-
-  @Field()
-  @IsNotEmpty({ message: 'Restaurant city is required.' })
-  @IsString({ message: 'Restaurant city must need to be one string.' })
-  address: string;
-
-  @Field()
   @IsNotEmpty({ message: 'Restaurant Email is required.' })
   @IsEmail({}, { message: 'Restaurant Email is invalid.' })
   email: string;
 
   @Field()
   @IsNotEmpty({ message: 'Restaurant Phone Number is required.' })
-  phone_number: number;
+  phoneNumber: string;
 
   @Field()
   @IsNotEmpty({ message: 'Restaurant Password is required.' })

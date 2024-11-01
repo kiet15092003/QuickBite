@@ -1,20 +1,17 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { JwtService, JwtVerifyOptions } from "@nestjs/jwt";
-import { PrismaService } from "../prisma/prisma.service";
 import { ConfigService } from "@nestjs/config";
 import { EmailService } from "./email/email.service";
 import { ActivationDto, LoginDto, RegisterDto } from "./dto/restaurant.dto";
 import * as bcrypt from "bcrypt";
 import { Response } from "express";
-import { TokenSender } from "./utils/send.token";
+import { PrismaService } from "../prisma/prisma.service";
+import { TokenSender } from "./utils/services/send.token";
 
 interface Restaurant {
   name: string;
-  country: string;
-  city: string;
-  address: string;
   email: string;
-  phone_number: number;
+  phoneNumber: string;
   password: string;
 }
 
@@ -29,7 +26,7 @@ export class RestaurantService {
 
   // register restaurant service
   async registerRestaurant(registerDto: RegisterDto, response: Response) {
-    const { name, country, city, address, email, phone_number, password } =
+    const { name, email, phoneNumber, password } =
       registerDto as Restaurant;
 
     const isEmailExist = await this.prisma.restaurant.findUnique({
@@ -45,7 +42,7 @@ export class RestaurantService {
 
     const usersWithPhoneNumber = await this.prisma.restaurant.findUnique({
       where: {
-        phone_number,
+        phoneNumber
       },
     });
 
@@ -59,11 +56,8 @@ export class RestaurantService {
 
     const restaurant: Restaurant = {
       name,
-      country,
-      city,
-      address,
       email,
-      phone_number,
+      phoneNumber,
       password: hashedPassword,
     };
 
@@ -117,7 +111,7 @@ export class RestaurantService {
       throw new BadRequestException("Invalid activation code");
     }
 
-    const { name, country, city, phone_number, password, email, address } =
+    const { name, phoneNumber, password, email } =
       newRestaurant.restaurant;
 
     const existRestaurant = await this.prisma.restaurant.findUnique({
@@ -136,10 +130,7 @@ export class RestaurantService {
       data: {
         name,
         email,
-        address,
-        country,
-        city,
-        phone_number,
+        phoneNumber: phoneNumber,
         password,
       },
     });

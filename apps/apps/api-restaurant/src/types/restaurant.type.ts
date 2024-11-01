@@ -1,14 +1,6 @@
 import { ObjectType, Field } from "@nestjs/graphql";
 import { Restaurant } from "../entities/restaurant.entities";
-
-@ObjectType()
-export class ErrorType {
-  @Field()
-  message: string;
-
-  @Field({ nullable: true })
-  code?: string;
-}
+import { ErrorType } from "../utils/base/error.base";
 
 @ObjectType()
 export class RegisterResponse {

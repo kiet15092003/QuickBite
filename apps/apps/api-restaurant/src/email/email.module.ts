@@ -22,7 +22,7 @@ import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
           from: 'Becodemy',
         },
         template: {
-          dir: join(__dirname, '../../../apps/api-restuarants/email-templates'),
+          dir: join(__dirname, '../../../apps/api-restaurant/email-templates'),
           adapter: new EjsAdapter(),
           options: {
             strict: false,

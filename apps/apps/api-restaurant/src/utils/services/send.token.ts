@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { Restaurant } from '../entities/restaurant.entities';
+import { Restaurant } from '../../entities/restaurant.entities';
 
 export class TokenSender {
   constructor(

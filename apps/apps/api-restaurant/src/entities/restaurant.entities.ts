@@ -1,11 +1,9 @@
 import { ObjectType, Field, Directive } from '@nestjs/graphql';
+import { BaseEntity } from '../utils/base/entity.base';
 
 @ObjectType()
 @Directive('@key(fields:"id")')
-export class Avatars {
-  @Field()
-  id: string;
-
+export class Avatars extends BaseEntity {
   @Field()
   public_id: string;
 
@@ -13,25 +11,13 @@ export class Avatars {
   url: string;
 
   @Field()
-  sellerId: string;
+  restaurantId: number;
 }
 
 @ObjectType()
-export class Restaurant {
-  @Field()
-  id?: string;
-
+export class Restaurant extends BaseEntity {
   @Field()
   name: string;
-
-  @Field()
-  country: string;
-
-  @Field()
-  city: string;
-
-  @Field()
-  address: string;
 
   @Field()
   email: string;
@@ -40,14 +26,11 @@ export class Restaurant {
   avatar?: Avatars | null;
 
   @Field()
-  phone_number: number;
+  phoneNumber: string;
 
   @Field()
   password: string;
 
   @Field()
-  createdAt?: Date;
-
-  @Field()
-  updatedAt?: Date;
+  role: string;
 }

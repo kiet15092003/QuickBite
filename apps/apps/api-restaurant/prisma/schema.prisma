@@ -1,10 +1,11 @@
 generator client {
   provider = "prisma-client-js"
+  output  = "../../../node_modules/@prisma-db-restaurant/client"
 }
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = env("RESTAURANT_DATABASE_URL")
 }
 
 enum Role {
@@ -36,7 +37,7 @@ model Restaurant {
   id           Int   @id @default(autoincrement())
   email        String   @unique
   name        String
-  phoneNumber Float    @unique
+  phoneNumber String    @unique
   password     String
   avatar Avatars?
   addreses Address[]

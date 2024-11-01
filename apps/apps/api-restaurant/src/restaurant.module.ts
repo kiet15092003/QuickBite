@@ -33,4 +33,4 @@ import { RestaurantResolver } from "./restaurant.resolver";
     RestaurantResolver,
   ],
 })
-export class restaurantModule {}
+export class RestaurantModule {}

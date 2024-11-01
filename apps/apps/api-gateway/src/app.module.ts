@@ -15,6 +15,10 @@ import { AppService } from './app.service';
               name: 'users',
               url: 'http://localhost:4001/graphql',
             },
+            {
+              name: 'restaurant',
+              url: 'http://localhost:4002/graphql',
+            },
           ],
         }),
       },

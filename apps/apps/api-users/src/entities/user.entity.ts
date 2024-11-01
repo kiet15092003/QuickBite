@@ -6,10 +6,12 @@ import { BaseEntity } from '../utils/base/entity.base';
 export class Avatars extends BaseEntity {
   @Field()
   public_id: string;
+
   @Field()
   url: string;
+
   @Field()
-  userId: string;
+  userId: number;
 }
 
 @ObjectType()
